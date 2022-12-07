@@ -28,9 +28,11 @@ RSpec.describe Cell do
         cruiser = Ship.new("Cruiser", 3)
         cell.place_ship(cruiser)
         # require "pry"; binding.pry
+        
         expect(cell.fired_upon?).to eq(false)
         cell.fired_upon
         expect(cruiser.health).to eq(2)
+        expect(cell.fired_upon?).to eq(true)
     end
 
 

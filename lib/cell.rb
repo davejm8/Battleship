@@ -5,7 +5,7 @@ class Cell
     def initialize(coordinate)
         @coordinate = coordinate
         @ship = ship
-        @cell_hit = false
+        @fired_upon = false
     end
 
     def empty?
@@ -17,18 +17,16 @@ class Cell
     end
 
     def fired_upon
-        if @ship.nil? == false && @ship.hit == false
-            @cell_hit = true
-        else
-            @cell_hit = false
+        @fired_upon = true
+        if @ship.nil? == false
+            @ship.hit
         end
+        # @ship.hit if !@ship.nil?
+        # @ship.hit unless @ship.nil?
     end
 
     def fired_upon?
-        if @cell_hit = true
-            @cell_hit = false
-        end
-
+        @fired_upon
     end
 
     
