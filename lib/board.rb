@@ -20,11 +20,10 @@ class Board
             "D3" => Cell.new("D3"),
             "D4" => Cell.new("D4")
            }
+        @valid_coordinate = @cells.keys
     end
 
     def valid_coordinate?(coordinate)
-        cells.map do |coordinate|
-            Cell.new("A1") == "A1"
-        end
+        @cells[coordinate] != nil
     end
 end
