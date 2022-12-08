@@ -30,8 +30,7 @@ class Board
 
     def valid_placement?(ship_type, coordinates)
         # if ship_type = cruiser
-        valid_length?(ship_type, coordinates) && valid_consecutive(coordinates,ship_type)
-        
+        valid_length?(ship_type, coordinates) && valid_consecutive(coordinates,ship_type) && occupied(coordinates) 
         # if ship_type.length == coordinates.length && coordinates.all? { |coordinate| valid_coordinate?(coordinate)}
         #     true
         # else
@@ -44,9 +43,12 @@ class Board
         ship_type.length == coordinates.length
     end
 
-    # def occupied
-        
-    # end
+    def occupied(coordinates)
+        coordinates.all? do |coord|
+            cells[coord].empty?
+
+        end
+    end
 
     def valid_consecutive(coordinates, ship_type)
         if ship_type.name == "Submarine"
