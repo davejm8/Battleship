@@ -25,14 +25,56 @@ class Board
     end
 
     def valid_coordinate?(coordinate)
-        @cells[coordinate] != nil
+        @cells.include?(coordinate) && !@cells[coordinate].fired_upon?
     end
 
-    def valid_placement?(ship, coordinates)
-        if ship.length == coordinates.length
-            true
+    def valid_placement?(ship_type, coordinates)
+        # if ship_type = cruiser
+        valid_length?(ship_type, coordinates) && valid_consecutive(coordinates,ship_type)
+        
+        # if ship_type.length == coordinates.length && coordinates.all? { |coordinate| valid_coordinate?(coordinate)}
+        #     true
+        # else
+        #     false
+        # end
+ 
+    end
+
+    def valid_length?(ship_type, coordinates)
+        ship_type.length == coordinates.length
+    end
+
+    # def occupied
+        
+    # end
+
+    def valid_consecutive(coordinates, ship_type)
+        if ship_type.name == "Submarine"
+        # require "pry"; binding.pry
+            coordinates.each_cons(2).all? do |first, second|
+                if first[0] == second[0]
+                    first[1].ord + 1 == second[1].ord
+                elsif first[0].ord + 1 == second[0].ord
+                    first[1] == second[1]
+                else 
+                    false
+                end
+            end
+        elsif ship_type.name == "Cruiser"
+            coordinates.each_cons(3).all? do |first, second, third|
+                if first[0] == second[0] && second[0] == third[0]
+                    first[1].ord + 1 == second[1].ord&& second[1].ord + 1 == third[1].ord
+                elsif first[0].ord + 1 == second[0].ord && second[0].ord + 1 == third[0].ord
+                    first[1] == second[1] && second[1] == third[1]
+                else 
+                    false
+                end
+            end
         else
             false
         end
     end
+
+
+
 end
