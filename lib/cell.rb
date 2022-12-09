@@ -30,7 +30,7 @@ class Cell
     end
 
     def render(reveal_ship = false)
-        if reveal_ship == true && @ship.sunk? == false && empty? == false
+        if reveal_ship == true && empty? == false
             return "S"
         elsif fired_upon? == true && empty? == true
             return "M"
