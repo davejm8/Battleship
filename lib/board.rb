@@ -77,6 +77,14 @@ class Board
         end
     end
 
+    def place(ship_type, coordinates)
+        #require "pry"; binding.pry
+        coordinates.map do |coordinate|
+            @cells[coordinate].place_ship(ship_type)
+                
+            
+        end
 
+    end
 
 end
