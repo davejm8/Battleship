@@ -25,16 +25,30 @@ class Game
             
         end
 
+        def main_menu
+            puts "Welcome to BattleShip!"
+            puts "Enter p to play. Enter q to quit." 
+            input = gets.chomp.downcase
+                if input = "q"
+                    puts "later NERD!"
+                elsif input = "p"
+                end #place ships / invalid input
+            end 
+
+        end
+
+        def place_cpu_cruiser
+            game.player_board.cells.keys.sample(2)
+            if cpu_cruiser.valid_placement? == true
+                
+                
+            end
+            # if statment valid_placement
 
 
-        # def play
-        #     require 'pry'; binding.pry
-        #     until player1.ships.all.sunk?
-        #     end
+        end
 
-           
+        def place_player_cruiser
 
-
-      #  end
     end
 end
