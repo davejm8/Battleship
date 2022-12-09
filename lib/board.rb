@@ -87,4 +87,14 @@ class Board
 
     end
 
+    def render(reveal_ship = false)
+       board_render =  "  1 2 3 4 \n" +
+        "A #{cells["A1"].render(reveal_ship)} #{cells["A2"].render(reveal_ship)} #{cells["A3"].render(reveal_ship)} #{cells["A4"].render(reveal_ship)} \n" +
+        "B #{cells["B1"].render(reveal_ship)} #{cells["B2"].render(reveal_ship)} #{cells["B3"].render(reveal_ship)} #{cells["B4"].render(reveal_ship)} \n" +
+        "C #{cells["C1"].render(reveal_ship)} #{cells["C2"].render(reveal_ship)} #{cells["C3"].render(reveal_ship)} #{cells["C4"].render(reveal_ship)} \n" +
+        "D #{cells["D1"].render(reveal_ship)} #{cells["D2"].render(reveal_ship)} #{cells["D3"].render(reveal_ship)} #{cells["D4"].render(reveal_ship)} \n" 
+
+
+    end
+
 end
