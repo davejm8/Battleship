@@ -54,13 +54,44 @@ RSpec.describe Board do
 
     end
 
-    it "can render a board with or without revealing ship location" do
+    it "can render a ship" do
         board = Board.new
         cruiser = Ship.new("Cruiser", 3)
         board.place(cruiser, ["A1", "A2", "A3"])
-        
+        cell_1 = board.cells["A1"]    
+        cell_2 = board.cells["A2"]
+        cell_3 = board.cells["A3"]
+        cell_4 = board.cells["A4"]
         expect(board.render).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
         expect(board.render(true)).to eq("  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n")
+        # cell_1.fired_upon
+        # expect(cruiser.health).to eq(2)
+        # expect(board.render).to eq("  1 2 3 4 \nA H . . . \nB . . . . \nC . . . . \nD . . . . \n")
+        # cell_2.fired_upon
+        # cell_3.fired_upon
+        # expect(board.render).to eq("  1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . . \n")
+        # cell_4.fired_upon
+        # expect(board.render).to eq("  1 2 3 4 \nA X X X M \nB . . . . \nC . . . . \nD . . . . \n")
+    end
+
+    it "can render hit, miss, sunk, or empty" do
+        board = Board.new
+        cruiser = Ship.new("Cruiser", 3)
+        board.place(cruiser, ["A1", "A2", "A3"])
+        cell_1 = board.cells["A1"]    
+        cell_2 = board.cells["A2"]
+        cell_3 = board.cells["A3"]
+        cell_4 = board.cells["A4"]
+        expect(board.render).to eq("  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n")
+        expect(board.render(true)).to eq("  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n")
+        cell_1.fired_upon
+        expect(cruiser.health).to eq(2)
+        expect(board.render).to eq("  1 2 3 4 \nA H . . . \nB . . . . \nC . . . . \nD . . . . \n")
+        cell_2.fired_upon
+        cell_3.fired_upon
+        expect(board.render).to eq("  1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD . . . . \n")
+        cell_4.fired_upon
+        expect(board.render).to eq("  1 2 3 4 \nA X X X M \nB . . . . \nC . . . . \nD . . . . \n")
     end
 
 end
