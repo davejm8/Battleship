@@ -23,17 +23,14 @@ RSpec.describe Game do
         expect(game.winner).to eq("You lose")
     end
 
-    it "determines a player win" do
+    it "places cpu ships" do
         game = Game.new
-        require 'pry'; binding.pry
-        game.cpu_cruiser.hit
-        game.cpu_cruiser.hit
-        game.cpu_cruiser.hit
-        game.cpu_submarine.hit
-        game.cpu_submarine.hit
-        game.winner
-
-        expect(game.winner).to eq("You win!")
+        game.place_cpu_ships
+        cell_1 = game.cells["A1"]    
+        cell_2 = game.cells["A2"]
+        cell_3 = game.cells["A3"]
+        expect(cell_3.ship == cell_1.ship).to eq(true)
+        
     end
 
 

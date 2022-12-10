@@ -14,41 +14,56 @@ class Game
         @player_submarine = Ship.new("submerine", 2)
         @cpu_cruiser = Ship.new("Crusier", 3)
         @cpu_submarine = Ship.new("submerine", 2)
+    end
 
-
-        def winner
-            if @cpu_cruiser.sunk? && @cpu_submarine.sunk? == true
-                p"You win!"
-            else  @player_cruiser.sunk? && @player_submarine.sunk? == true
-                p"You lose"
-            end
-            
+    def winner
+        if @cpu_cruiser.sunk? && @cpu_submarine.sunk? == true
+            p"You win!"
+        else  @player_cruiser.sunk? && @player_submarine.sunk? == true
+            p"You lose"
         end
+        
+    end
 
-        def main_menu
-            puts "Welcome to BattleShip!"
-            puts "Enter p to play. Enter q to quit." 
-            input = gets.chomp.downcase
-                if input = "q"
-                    puts "later NERD!"
-                elsif input = "p"
-                end #place ships / invalid input
-            end 
+    def main_menu
+        puts "Welcome to BattleShip!"
+        puts "Enter p to play. Enter q to quit." 
+        input = gets.chomp.downcase
+        if input = "q"
+            puts "later NERD!"
+        elsif input = "p"
+        end #place ships / invalid input
+    end 
 
-        end
+    def cpu_cruiser_cord
+       ["A1", "A2", "A3"]
+        
+        # # if cpu_cruiser.valid_placement? == true
+        # if cpu_board.valid_placement?(cpu_cruiser, random_cord) == true
+        #     random_cord
+        # else
+        #     cpu_cruiser_coord
+        # end
+    end
 
-        def place_cpu_cruiser
-            game.player_board.cells.keys.sample(2)
-            if cpu_cruiser.valid_placement? == true
-                
-                
-            end
-            # if statment valid_placement
+    def cpu_submarine_cord
+        ["B1", "B2"]
+    end
+        
 
-
-        end
-
-        def place_player_cruiser
+    def place_cpu_ships
+        cpu_cruiser_cord
+        cpu_submarine_cord
+        cpu_board.place(cpu_cruiser, cpu_cruiser_cord)
+        cpu_board.place(cpu_submarine, cpu_submarine_cord)
+        puts cpu_board.render
 
     end
+
+
+
+    
+
+        
+    
 end
