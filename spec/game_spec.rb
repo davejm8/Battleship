@@ -23,13 +23,12 @@ RSpec.describe Game do
         expect(game.winner).to eq("You lose")
     end
 
-    it "places cpu ships" do
+    it "has a main menu" do
         game = Game.new
-        game.place_cpu_ships
-        cell_1 = game.cells["A1"]    
-        cell_2 = game.cells["A2"]
-        cell_3 = game.cells["A3"]
-        expect(cell_3.ship == cell_1.ship).to eq(true)
+        game.main_menu
+        
+        expect(game.main_menu).to include("Welcome to BattleShip!")
+        
         
     end
 
