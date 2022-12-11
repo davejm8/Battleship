@@ -23,14 +23,14 @@ RSpec.describe Game do
         expect(game.winner).to eq("You lose")
     end
 
-    it "has a main menu" do
+    it "main menu places cpu ships" do
         game = Game.new
         game.main_menu
-        
-        expect(game.main_menu).to include("Welcome to BattleShip!")
-        
-        
+        expect(game.cpu_cruiser_coordinates).to eq(["C1", "C2", "C3"])
+        expect(game.cpu_submarine_coordinates).to eq(["A1", "A2"])
     end
+
+    
 
 
 
