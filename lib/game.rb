@@ -1,3 +1,8 @@
+require './lib/board'
+require './lib/ship'
+require './lib/cell'
+require './lib/game'
+
 class Game 
     attr_reader :cpu_board, 
                 :player_board, 
@@ -22,7 +27,6 @@ class Game
         else  @player_cruiser.sunk? && @player_submarine.sunk? == true
             p"You lose"
         end
-        
     end
 
     def main_menu
@@ -39,6 +43,10 @@ class Game
             main_menu
         end
     end 
+
+    # def turn
+        
+    # end
 
     def place_cpu_ships
         cpu_cruiser_coordinates
@@ -126,7 +134,7 @@ class Game
 
     def player_shot
         puts "You can type the coordinate you want to fire upon, if you want(example: A1)."
-        cell_shot = gets.chomp.upcase
+        @player_shot = gets.chomp.upcase
         if cpu_board.valid_coordinate?(cell_shot) == true
             cpu_board.cells[cell_shot].fired_upon
         else
@@ -136,21 +144,33 @@ class Game
     end
 
     def cpu_shot
-        cell_shot = "A1"
+        @computer_shot = "A1"
         if player_board.valid_coordinate?(cell_shot) == true && player_board.cells[cell_shot].fired_upon? == false
             player_board.cells[cell_shot].fired_upon
         end
     end
 
     def player_results
-        if reveal_ship == true && empty? == false
-            return "S"
-        elsif fired_upon? == true && empty? == true
-            return "M"
-        else fired_upon? == true && empty? == false && @ship.sunk? == false
-            return "H"
+        if cpu_board.cells[@player_shot].render == "M"
+            puts "#{@player_shot} missed. Try again, but better."
+        elsif cpu_board.cells[@player_shot].render == "H"
+            puts "#{@player_shot} was a hit.. great."
+        else cpu_board.cells[@player_shot].render == "X"
+            puts "#{@player_shot} sunk a ship. Way to go.."
         end
     end
+
+    def cpu_results
+        if player_board.cells[@player_shot].render == "M"
+            puts "My shot on #{@cpu_shot} missed."
+        elsif player_board.cells[@cpu_shot].render == "H"
+            puts "My shot on #{@cpu_shot} was a hit."
+        else player_board.cells[@cpu_shot].render == "X"
+            puts "My shot on #{@cpu_shot} sunk a ship."
+        end
+    end
+
+
         
     
 end
