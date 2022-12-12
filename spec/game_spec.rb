@@ -30,6 +30,23 @@ RSpec.describe Game do
         expect(game.cpu_submarine_coordinates).to eq(["A1", "A2"])
     end
 
+    it "player can fire on cpu board" do
+        game = Game.new
+        game.main_menu
+        expect(game.cpu_board.cells["A1"].fired_upon?).to eq(false)
+        game.cpu_board.cells["A1"].fired_upon
+        expect(game.cpu_board.cells["A1"].fired_upon?).to eq(true)
+    end
+
+    it "cpu can fire" do
+        game = Game.new
+        game.main_menu
+        game.player_board.place(@player_cruiser, ["A1", "A2", "A3"])
+        expect(game.player_board.cells["A1"].fired_upon?).to eq(false)
+        game.cpu_shot
+        expect(game.player_board.cells["A1"].fired_upon?).to eq(true)
+    end
+
     
 
 
