@@ -27,19 +27,12 @@ class Game
           puts "I won!"
           main_menu
         elsif @cpu_cruiser.sunk? && @cpu_submarine.sunk? == true
-          puts "You won!"
+          puts "You have defeated Chad!"
           main_menu
         else false
         end
     end
-    # def winner
-    #     if @cpu_cruiser.sunk? && @cpu_submarine.sunk? == true
-    #         p"You win!"
-    #     else  @player_cruiser.sunk? && @player_submarine.sunk? == true
-    #         p"You lose"
-    #     end
-    # end
-
+    
     def main_menu
         puts "Welcome to Passive-Agressive BattleShip!"
         puts "Enter p to play, I guess. Enter q to quit." 
@@ -48,15 +41,12 @@ class Game
             puts "Wow... okay."
         elsif input == "q"
             puts "bye."
+            exit
         else 
             puts "You probably didn't type p or q."
             main_menu
         end
     end 
-
-    # def turn
-        
-    # end
 
     def place_cpu_ships
         cpu_cruiser_coordinates
@@ -68,7 +58,7 @@ class Game
 
 
     def explanation
-        puts "Opponent ships are ready.. or whatever."
+        puts "Chad's ships are ready.. or whatever."
         sleep(1)
         puts "It is your turn to place your ships."
         sleep(1)
@@ -143,10 +133,15 @@ class Game
         # turn_start
         until winner? do
             display_cpu_board
+            sleep(1)
             display_player_board
+            sleep(1)
             player_shot
+            sleep(1)
             player_results
+            sleep(1)
             cpu_shot
+            sleep(1)
             cpu_results
         end
     end
@@ -158,7 +153,7 @@ class Game
     end
 
     def display_cpu_board
-        puts "-------------CPU Board------------"
+        puts "-----------Chad's Board------------"
         puts @cpu_board.render
     end
 
@@ -193,11 +188,11 @@ class Game
 
     def cpu_results
         if @player_board.cells[@computer_shot].render == "M"
-            puts "My shot on #{@computer_shot} missed."
+            puts "Chad The PC: My shot on #{@computer_shot} missed."
         elsif @player_board.cells[@computer_shot].render == "H"
-            puts "My shot on #{@computer_shot} was a hit."
+            puts "Chad The PC: My shot on #{@computer_shot} was a hit."
         else @player_board.cells[@computer_shot].render == "X"
-            puts "My shot on #{@computer_shot} sunk a ship."
+            puts "Chad The PC: My shot on #{@computer_shot} sunk a ship."
         end
     end
 
