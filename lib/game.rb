@@ -33,10 +33,10 @@ class Game
         puts "Welcome to Passive-Agressive BattleShip!"
         puts "Enter p to play, I guess. Enter q to quit." 
         input = gets.chomp.downcase
-        if input == "p"
+        if input = "p"
             place_cpu_ships
             puts "Wow... okay."
-        elsif input == "q"
+        elsif input = "q"
             puts "bye."
         else 
             puts "You probably didn't type p or q."
@@ -44,6 +44,9 @@ class Game
         end
     end 
 
+    # def turn
+        
+    # end
 
     def place_cpu_ships
         cpu_cruiser_coordinates
@@ -62,7 +65,7 @@ class Game
         puts "Your Submarine occupies 2 consecutive spaces."
         puts "So like...."
         puts "Have fun, I guess."
-        puts player_board.render(true)
+        puts @player_board.render(true)
         place_player_cruiser
     end
 
@@ -87,15 +90,14 @@ class Game
         input = gets.chomp.upcase
         if player_board.valid_placement?(player_cruiser, input) == true
             player_board.place(player_cruiser, input)
-            place_player_submarine
         else
             puts "Invalid."
-            place_player_cruiser
+            place_player_submarine
         end
     end
     
     def place_player_submarine
-        puts "Enter the coordinates for the Submarine(example : C1, C2)."
+        puts "Enter the coordinates for the Cruiser(example : C1, C2)."
         input = gets.chomp.upcase
         if player_board.valid_placement?(player_submarine, input) == true
             player_board.place(player_submarine, input)
@@ -130,9 +132,9 @@ class Game
 
     def player_shot
         puts "You can type the coordinate you want to fire upon, if you want(example: A1)."
-        @player_fire = gets.chomp.upcase
-        if cpu_board.valid_coordinate?(@player_fire) == true
-            cpu_board.cells[@player_fire].fired_upon
+        @player_shot = gets.chomp.upcase
+        if cpu_board.valid_coordinate?(cell_shot) == true
+            cpu_board.cells[cell_shot].fired_upon
         else
             puts "Invalid coordinate. Did you read the example?"
             player_shot
@@ -140,9 +142,9 @@ class Game
     end
 
     def cpu_shot
-        @computer_fire = "A1"
-        if player_board.valid_coordinate?(@computer_fire) == true && player_board.cells[@computer_fire].fired_upon? == false
-            player_board.cells[@computer_fire].fired_upon
+        @computer_shot = "A1"
+        if player_board.valid_coordinate?(@computer_shot) == true && player_board.cells[@computer_shot].fired_upon? == false
+            player_board.cells[@computer_shot].fired_upon
         end
     end
 
