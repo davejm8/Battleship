@@ -84,19 +84,25 @@ class Game
     end
 
     def cpu_cruiser_coordinates
-        ["C1", "C2", "C3"]
-        # coordinates = @cpu_board.cells.keys.sample(@cpu_cruiser.length)
-        # @cpu_board.valid_placement?(@cpu_cruiser, coordinates) == true
-        # coordinates
+        # ["C1", "C2", "C3"]
+        coordinates = @cpu_board.cells.keys.sample(@cpu_cruiser.length)
+        if @cpu_board.valid_placement?(@cpu_cruiser, coordinates) == true
+            coordinates
+        else
+            cpu_cruiser_coordinates
+        end
     
     end
 
 
     def cpu_submarine_coordinates
-        ["A1", "A2"]
-        # coordinates = @cpu_board.cells.keys.sample(@cpu_submarine.length)
-        # @cpu_board.valid_placement?(@cpu_submarine, coordinates) == true
-        # coordinates
+        # ["A1", "A2"]
+        coordinates = @cpu_board.cells.keys.sample(@cpu_submarine.length)
+        if @cpu_board.valid_placement?(@cpu_submarine, coordinates) == true
+            coordinates
+        else
+            cpu_submarine_coordinates
+        end
     end
     
     def place_player_cruiser
@@ -115,7 +121,7 @@ class Game
     end
     
     def place_player_submarine
-        puts "Enter the coordinates for the Cruiser(example : C1, C2)."
+        puts "Enter the coordinates for the Submarine(example : C1, C2)."
         loop do
         input = gets.chomp.upcase.split
             if @player_board.valid_placement?(player_submarine, input) == true
@@ -145,17 +151,6 @@ class Game
         end
     end
 
-    # def turn_start
-    #     puts "I guess you can fire."
-    #     until winner do
-    #         display_cpu_board
-    #         display_player_board
-    #         player_shot
-    #         player_results
-    #         cpu_shot
-    #         cpu_results
-    #     end
-    # end
 
     def display_player_board
         puts "-----------Player Board----------"
@@ -180,7 +175,7 @@ class Game
     end
 
     def cpu_shot
-        @computer_shot = "A1"
+        @computer_shot = @player_board.cells.keys.sample
         if @player_board.valid_coordinate?(@computer_shot) == true && player_board.cells[@computer_shot].fired_upon? == false
             @player_board.cells[@computer_shot].fired_upon
         end
