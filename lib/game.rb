@@ -33,10 +33,9 @@ class Game
         puts "Welcome to Passive-Agressive BattleShip!"
         puts "Enter p to play, I guess. Enter q to quit." 
         input = gets.chomp.downcase
-        if input = "p"
-            place_cpu_ships
+        if input == "p"
             puts "Wow... okay."
-        elsif input = "q"
+        elsif input == "q"
             puts "bye."
         else 
             puts "You probably didn't type p or q."
@@ -54,7 +53,6 @@ class Game
         cpu_submarine_coordinates
         @cpu_board.place(@cpu_submarine, cpu_submarine_coordinates)
         puts @cpu_board.render
-        explaination
     end
 
 
@@ -66,7 +64,6 @@ class Game
         puts "So like...."
         puts "Have fun, I guess."
         puts @player_board.render(true)
-        place_player_cruiser
     end
 
     def cpu_cruiser_coordinates
@@ -92,8 +89,9 @@ class Game
             player_board.place(player_cruiser, input)
         else
             puts "Invalid."
-            place_player_submarine
+            place_player_cruiser
         end
+        
     end
     
     def place_player_submarine
@@ -103,8 +101,16 @@ class Game
             player_board.place(player_submarine, input)
         else
             puts "Invalid."
-            turn_start
+            place_player_submarine
         end
+    end
+
+    def game_start
+        main_menu
+        place_cpu_ships
+        explaination
+        place_player_cruiser
+        turn_start
     end
 
     def turn_start
