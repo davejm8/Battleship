@@ -12,13 +12,9 @@ class Ship
         if @health > 0
             @health -= 1
         end
- 
     end
 
     def sunk?
         health == 0
     end
-
-
-    
 end

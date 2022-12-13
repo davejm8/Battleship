@@ -4,7 +4,6 @@ require './lib/ship'
 RSpec.describe Ship do
     it 'exists' do
         cruiser = Ship.new("Cruiser", 3)
-        
         expect(cruiser).to be_an_instance_of(Ship)
     end
 
@@ -18,16 +17,15 @@ RSpec.describe Ship do
 
     it 'can get hit' do
         cruiser = Ship.new("Cruiser", 3)
-        
         cruiser.hit
         expect(cruiser.health).to eq(2)
         cruiser.hit
         expect(cruiser.health).to eq(1)
-
     end
 
     it 'can be sank' do
         cruiser = Ship.new("Cruiser", 3)
+        expect(cruiser.sunk?).to equal(false)
         3.times do cruiser.hit
         end
         expect(cruiser.sunk?).to equal(true)

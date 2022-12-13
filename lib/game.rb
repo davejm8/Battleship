@@ -1,3 +1,8 @@
+require './lib/board'
+require './lib/ship'
+require './lib/cell'
+require './lib/game'
+
 class Game 
     attr_reader :cpu_board, 
                 :player_board, 
@@ -5,35 +10,35 @@ class Game
                 :player_submarine, 
                 :cpu_cruiser,
                 :cpu_submarine
-                
-    
     def initialize
         @cpu_board = Board.new
         @player_board = Board.new
-        @player_cruiser = Ship.new("Crusier", 3)
-        @player_submarine = Ship.new("submerine", 2)
-        @cpu_cruiser = Ship.new("Crusier", 3)
-        @cpu_submarine = Ship.new("submerine", 2)
+        @player_cruiser = Ship.new("Cruiser", 3)
+        @player_submarine = Ship.new("Submarine", 2)
+        @cpu_cruiser = Ship.new("Cruiser", 3)
+        @cpu_submarine = Ship.new("Submarine", 2)
     end
 
-    def winner
-        if @cpu_cruiser.sunk? && @cpu_submarine.sunk? == true
-            p"You win!"
-        else  @player_cruiser.sunk? && @player_submarine.sunk? == true
-            p"You lose"
+    def winner?
+        if @player_cruiser.sunk? && @player_submarine.sunk? == true
+          puts "I won!"
+          main_menu
+        elsif @cpu_cruiser.sunk? && @cpu_submarine.sunk? == true
+          puts "You have defeated Chad!"
+          main_menu
+        else false
         end
-        
     end
-
+    
     def main_menu
         puts "Welcome to Passive-Agressive BattleShip!"
         puts "Enter p to play, I guess. Enter q to quit." 
         input = gets.chomp.downcase
-        if input = "p"
-            place_cpu_ships
+        if input == "p"
             puts "Wow... okay."
-        elsif input = "q"
+        elsif input == "q"
             puts "bye."
+            exit
         else 
             puts "You probably didn't type p or q."
             main_menu
@@ -46,89 +51,110 @@ class Game
         cpu_submarine_coordinates
         @cpu_board.place(@cpu_submarine, cpu_submarine_coordinates)
         puts @cpu_board.render
-        explaination
     end
 
 
-    def explaination
-        puts "Opponent ships are ready.. or whatever."
+    def explanation
+        puts "Chad's ships are ready.. or whatever."
+        sleep(1)
         puts "It is your turn to place your ships."
+        sleep(1)
         puts "Obviously your Cruiser occupies 3 consecutive spaces."
+        sleep(1)
         puts "Your Submarine occupies 2 consecutive spaces."
+        sleep(1)
         puts "So like...."
+        sleep(1)
         puts "Have fun, I guess."
+        sleep(1)
         puts @player_board.render(true)
-        place_player_cruiser
     end
 
     def cpu_cruiser_coordinates
-        ["C1", "C2", "C3"]
-        # coordinates = @cpu_board.cells.keys.sample(@cpu_cruiser.length)
-        # @cpu_board.valid_placement?(@cpu_cruiser, coordinates) == true
-        # coordinates
-    
+        coordinates = @cpu_board.cells.keys.sample(@cpu_cruiser.length)
+        if @cpu_board.valid_placement?(@cpu_cruiser, coordinates) == true
+            coordinates
+        else
+            cpu_cruiser_coordinates
+        end
     end
 
 
     def cpu_submarine_coordinates
-        ["A1", "A2"]
-        # coordinates = @cpu_board.cells.keys.sample(@cpu_submarine.length)
-        # @cpu_board.valid_placement?(@cpu_submarine, coordinates) == true
-        # coordinates
+        coordinates = @cpu_board.cells.keys.sample(@cpu_submarine.length)
+        if @cpu_board.valid_placement?(@cpu_submarine, coordinates) == true
+            coordinates
+        else
+            cpu_submarine_coordinates
+        end
     end
     
     def place_player_cruiser
         puts "Enter the coordinates for the Cruiser(example : A1, A2, A3)."
-        input = gets.chomp.upcase
-        if player_board.valid_placement?(player_cruiser, input) == true
-            player_board.place(player_cruiser, input)
-        else
+        loop do
+        input = gets.chomp.upcase.split
+            if @player_board.valid_placement?(player_cruiser, input) == true
+            @player_board.place(player_cruiser, input)
+                break
+            else
             puts "Invalid."
-            place_player_submarine
+            end
         end
     end
     
     def place_player_submarine
-        puts "Enter the coordinates for the Cruiser(example : C1, C2)."
-        input = gets.chomp.upcase
-        if player_board.valid_placement?(player_submarine, input) == true
-            player_board.place(player_submarine, input)
-        else
-            puts "Invalid."
-            # turn_start
+        puts "Enter the coordinates for the Submarine(example : C1, C2)."
+        loop do
+        input = gets.chomp.upcase.split
+            if @player_board.valid_placement?(player_submarine, input) == true
+                @player_board.place(player_submarine, input)
+                break
+            else
+                puts "Invalid."
+                place_player_submarine
+            end
         end
     end
 
-    def turn_start
-        puts "I guess you can fire."
-        until winner do
-            method to display cpu
-            method to display player
-            type valid cell
-            fire upon valid cell
-            results H M X
-            computer picks cell to fire upon
-            computer fires
-            results H M X
+    def game_start
+        main_menu
+        place_cpu_ships
+        explanation
+        place_player_cruiser
+        place_player_submarine
+
+        until winner? do
+            display_cpu_board
+            sleep(1)
+            display_player_board
+            sleep(1)
+            player_shot
+            sleep(1)
+            player_results
+            sleep(1)
+            cpu_shot
+            sleep(1)
+            cpu_results
         end
     end
+
 
     def display_player_board
         puts "-----------Player Board----------"
-        player_board.render(true)
+        puts @player_board.render(true)
     end
 
     def display_cpu_board
-        puts "-------------CPU Board------------"
-        cpu_board.render
+        puts "-----------Chad's Board------------"
+        puts @cpu_board.render
     end
 
 
     def player_shot
         puts "You can type the coordinate you want to fire upon, if you want(example: A1)."
-        cell_shot = gets.chomp.upcase
-        if cpu_board.valid_coordinate?(cell_shot) == true
-            cpu_board.cells[cell_shot].fired_upon
+        @player_shot = gets.chomp.upcase
+        if @cpu_board.valid_coordinate?(@player_shot) == true
+            @cpu_board.cells[@player_shot].fired_upon
         else
             puts "Invalid coordinate. Did you read the example?"
             player_shot
@@ -136,21 +162,29 @@ class Game
     end
 
     def cpu_shot
-        cell_shot = "A1"
-        if player_board.valid_coordinate?(cell_shot) == true && player_board.cells[cell_shot].fired_upon? == false
-            player_board.cells[cell_shot].fired_upon
+        @computer_shot = @player_board.cells.keys.sample
+        if @player_board.valid_coordinate?(@computer_shot) == true && player_board.cells[@computer_shot].fired_upon? == false
+            @player_board.cells[@computer_shot].fired_upon
         end
     end
 
     def player_results
-        if reveal_ship == true && empty? == false
-            return "S"
-        elsif fired_upon? == true && empty? == true
-            return "M"
-        else fired_upon? == true && empty? == false && @ship.sunk? == false
-            return "H"
+        if @cpu_board.cells[@player_shot].render == "M"
+            puts "#{@player_shot} missed. Try again, but better."
+        elsif @cpu_board.cells[@player_shot].render == "H"
+            puts "#{@player_shot} was a hit.. great."
+        else @cpu_board.cells[@player_shot].render == "X"
+            puts "#{@player_shot} sunk a ship. Way to go.."
         end
     end
-        
-    
+
+    def cpu_results
+        if @player_board.cells[@computer_shot].render == "M"
+            puts "Chad The PC: My shot on #{@computer_shot} missed."
+        elsif @player_board.cells[@computer_shot].render == "H"
+            puts "Chad The PC: My shot on #{@computer_shot} was a hit."
+        else @player_board.cells[@computer_shot].render == "X"
+            puts "Chad The PC: My shot on #{@computer_shot} sunk a ship."
+        end
+    end
 end
