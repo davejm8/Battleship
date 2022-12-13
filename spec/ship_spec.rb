@@ -28,6 +28,7 @@ RSpec.describe Ship do
 
     it 'can be sank' do
         cruiser = Ship.new("Cruiser", 3)
+        expect(cruiser.sunk?).to equal(false)
         3.times do cruiser.hit
         end
         expect(cruiser.sunk?).to equal(true)
