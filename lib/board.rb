@@ -1,7 +1,6 @@
 class Board
     attr_reader :cells, 
                 :coordinates
-
     def initialize
         @cells = {
             "A1" => Cell.new("A1"),
@@ -29,14 +28,7 @@ class Board
     end
 
     def valid_placement?(ship_type, coordinates)
-        # if ship_type = cruiser
         valid_length?(ship_type, coordinates) && valid_consecutive(coordinates,ship_type) && occupied(coordinates) 
-        # if ship_type.length == coordinates.length && coordinates.all? { |coordinate| valid_coordinate?(coordinate)}
-        #     true
-        # else
-        #     false
-        # end
- 
     end
 
     def valid_length?(ship_type, coordinates)
@@ -46,13 +38,11 @@ class Board
     def occupied(coordinates)
         coordinates.all? do |coord|
             cells[coord].empty?
-
         end
     end
 
     def valid_consecutive(coordinates, ship_type)
         if ship_type.name == "Submarine"
-        # require "pry"; binding.pry
             coordinates.each_cons(2).all? do |first, second|
                 if first[0] == second[0]
                     first[1].ord + 1 == second[1].ord
@@ -78,13 +68,9 @@ class Board
     end
 
     def place(ship_type, coordinates)
-        #require "pry"; binding.pry
         coordinates.map do |coordinate|
-            @cells[coordinate].place_ship(ship_type)
-                
-            
+            @cells[coordinate].place_ship(ship_type)  
         end
-
     end
 
     def render(reveal_ship = false)
@@ -93,8 +79,5 @@ class Board
         "B #{cells["B1"].render(reveal_ship)} #{cells["B2"].render(reveal_ship)} #{cells["B3"].render(reveal_ship)} #{cells["B4"].render(reveal_ship)} \n" +
         "C #{cells["C1"].render(reveal_ship)} #{cells["C2"].render(reveal_ship)} #{cells["C3"].render(reveal_ship)} #{cells["C4"].render(reveal_ship)} \n" +
         "D #{cells["D1"].render(reveal_ship)} #{cells["D2"].render(reveal_ship)} #{cells["D3"].render(reveal_ship)} #{cells["D4"].render(reveal_ship)} \n" 
-
-
     end
-
 end

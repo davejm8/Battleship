@@ -21,8 +21,6 @@ class Cell
         if @ship.nil? == false
             @ship.hit
         end
-        # @ship.hit if !@ship.nil?
-        # @ship.hit unless @ship.nil?
     end
 
     def fired_upon?
@@ -41,6 +39,5 @@ class Cell
         else fired_upon? == false
             return "."
         end
-    end
-    
+    end 
 end

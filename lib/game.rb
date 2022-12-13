@@ -10,8 +10,6 @@ class Game
                 :player_submarine, 
                 :cpu_cruiser,
                 :cpu_submarine
-                
-    
     def initialize
         @cpu_board = Board.new
         @player_board = Board.new
@@ -20,7 +18,6 @@ class Game
         @cpu_cruiser = Ship.new("Cruiser", 3)
         @cpu_submarine = Ship.new("Submarine", 2)
     end
-
 
     def winner?
         if @player_cruiser.sunk? && @player_submarine.sunk? == true
@@ -74,19 +71,16 @@ class Game
     end
 
     def cpu_cruiser_coordinates
-        # ["C1", "C2", "C3"]
         coordinates = @cpu_board.cells.keys.sample(@cpu_cruiser.length)
         if @cpu_board.valid_placement?(@cpu_cruiser, coordinates) == true
             coordinates
         else
             cpu_cruiser_coordinates
         end
-    
     end
 
 
     def cpu_submarine_coordinates
-        # ["A1", "A2"]
         coordinates = @cpu_board.cells.keys.sample(@cpu_submarine.length)
         if @cpu_board.valid_placement?(@cpu_submarine, coordinates) == true
             coordinates
@@ -104,10 +98,8 @@ class Game
                 break
             else
             puts "Invalid."
-            # place_player_cruiser
             end
         end
-        
     end
     
     def place_player_submarine
@@ -130,7 +122,7 @@ class Game
         explanation
         place_player_cruiser
         place_player_submarine
-        # turn_start
+
         until winner? do
             display_cpu_board
             sleep(1)
@@ -195,5 +187,4 @@ class Game
             puts "Chad The PC: My shot on #{@computer_shot} sunk a ship."
         end
     end
-
 end
