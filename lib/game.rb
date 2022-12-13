@@ -15,10 +15,10 @@ class Game
     def initialize
         @cpu_board = Board.new
         @player_board = Board.new
-        @player_cruiser = Ship.new("Crusier", 3)
-        @player_submarine = Ship.new("submerine", 2)
-        @cpu_cruiser = Ship.new("Crusier", 3)
-        @cpu_submarine = Ship.new("submerine", 2)
+        @player_cruiser = Ship.new("Cruiser", 3)
+        @player_submarine = Ship.new("Submarine", 2)
+        @cpu_cruiser = Ship.new("Cruiser", 3)
+        @cpu_submarine = Ship.new("Submarine", 2)
     end
 
     def winner
@@ -56,7 +56,7 @@ class Game
     end
 
 
-    def explaination
+    def explanation
         puts "Opponent ships are ready.. or whatever."
         puts "It is your turn to place your ships."
         puts "Obviously your Cruiser occupies 3 consecutive spaces."
@@ -84,12 +84,16 @@ class Game
     
     def place_player_cruiser
         puts "Enter the coordinates for the Cruiser(example : A1, A2, A3)."
-        input = gets.chomp.upcase
-        if player_board.valid_placement?(player_cruiser, input) == true
-            player_board.place(player_cruiser, input)
-        else
+        loop do
+        input = gets.chomp.upcase.split
+        puts "#{input}"
+            if @player_board.valid_placement?(player_cruiser, input) == true
+            @player_board.place(player_cruiser, input)
+                break
+            else
             puts "Invalid."
-            place_player_cruiser
+            # place_player_cruiser
+            end
         end
         
     end
@@ -108,7 +112,7 @@ class Game
     def game_start
         main_menu
         place_cpu_ships
-        explaination
+        explanation
         place_player_cruiser
         turn_start
     end

@@ -25,8 +25,11 @@ RSpec.describe Game do
 
     it "main menu places cpu ships" do
         game = Game.new
+        
         game.place_cpu_ships
+
         expect(game.cpu_cruiser_coordinates).to eq(["C1", "C2", "C3"])
+        
         expect(game.cpu_submarine_coordinates).to eq(["A1", "A2"])
     end
 
