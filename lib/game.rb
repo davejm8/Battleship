@@ -197,12 +197,12 @@ class Game
     end
 
     def cpu_results
-        if @player_board.cells[@player_shot].render == "M"
-            puts "My shot on #{@cpu_shot} missed."
-        elsif @player_board.cells[@cpu_shot].render == "H"
-            puts "My shot on #{@cpu_shot} was a hit."
-        else @player_board.cells[@cpu_shot].render == "X"
-            puts "My shot on #{@cpu_shot} sunk a ship."
+        if @player_board.cells[@computer_shot].render == "M"
+            puts "My shot on #{@computer_shot} missed."
+        elsif @player_board.cells[@computer_shot].render == "H"
+            puts "My shot on #{@computer_shot} was a hit."
+        else @player_board.cells[@computer_shot].render == "X"
+            puts "My shot on #{@computer_shot} sunk a ship."
         end
     end
 

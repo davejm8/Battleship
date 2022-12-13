@@ -34,7 +34,7 @@ class Cell
             return "S"
         elsif fired_upon? == true && empty? == true
             return "M"
-        elsif fired_upon? == true && empty? == false && @ship.sunk? == false
+        elsif fired_upon? == true && @ship != nil && @ship.sunk? == false
             return "H"
         elsif fired_upon? == true && empty? == false && @ship.sunk? == true
             return "X"
